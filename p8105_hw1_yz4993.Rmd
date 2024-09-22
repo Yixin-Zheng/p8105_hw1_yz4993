@@ -14,6 +14,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2) 
 #load package for penguins data
 library(palmerpenguins) 
+#loead package for creating dataframe
+library(tidyverse)
 ```
 
 ```{r 1.2 examine dataset, include=FALSE}
@@ -59,4 +61,25 @@ ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)
 
 #save the scatterplot as a png file to the project directory
 ggsave("penguin_scatterplot.png") 
+```
+
+# Problem 2
+```{r 2.1 creating dataframe}
+## set seed to ensure reproducibility
+set.seed(1234)
+
+## define data frame
+df1 <- tibble(
+  #a random sample of size 10 from a standard Normal distribution
+  random_sample = rnorm(10),
+  #a logical vector indicating whether elements of the sample are greater than 0
+  positive = rnorm(10) > 0,
+  #a character vector of length 10
+  chr10 = letters[1:10],
+  #a factor vector of length 10, with 3 factor levels (X,Y,Z) with replacement
+  fac10_3 = factor(sample(c("X", "Y", "Z"), 10, replace = TRUE))
+)
+
+#view the dataframe
+df1
 ```
