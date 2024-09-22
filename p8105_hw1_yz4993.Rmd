@@ -8,14 +8,55 @@ output: github_document
 # Problem 1
 
 ```{r 1.1 setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE) #setting global option to not show code for knitr
-library(ggplot2) #load package for creating plots
-library(palmerpenguins) #load package for penguins data
+#setting global option to show code for knitr
+knitr::opts_chunk$set(echo = TRUE)
+#load package for creating plots
+library(ggplot2) 
+#load package for penguins data
+library(palmerpenguins) 
 ```
 
-```{r 1.2 examine dataset}
-data("penguins", package = "palmerpenguins") #load penguins data set
-colnames(penguins) #examine the variables
+```{r 1.2 examine dataset, include=FALSE}
+#load penguins data set
+data("penguins", package = "palmerpenguins")
+#examine the variables
+colnames(penguins) 
 ```
 
-The `penguins` dataset contains `r nrow(penguins)` rows and `r ncol(penguins)` columns. The dataset contains the following variables:`r paste(colnames(penguins), collapse = ", ")`. The mean flipper length is `r mean(penguins$flipper_length_mm, na.rm = TRUE)`mm.
+The `penguins` dataset contains `r nrow(penguins)` rows and `r ncol(penguins)` columns. The dataset contains the following variables:
+
+-   `r colnames(penguins)[1]` is a factor denoting the penguins' species: `r paste(unique(penguins$species), collapse = ", ")`.
+
+-   `r colnames(penguins)[2]` is a factor denoting the islands where penguins were found: `r paste(unique(penguins$island), collapse = ", ")`.
+
+-   `r colnames(penguins)[3]` is a number denoting the bill length of penguin in millimeters, with a range from `r min(penguins$bill_length_mm, na.rm = TRUE)` mm to `r max(penguins$bill_length_mm, na.rm = TRUE)` mm.
+
+-   `r colnames(penguins)[4]` is a number denoting the bill depth of penguin in millimeters, with a range from `r min(penguins$bill_depth_mm, na.rm = TRUE)` mm to `r max(penguins$bill_depth_mm, na.rm = TRUE)` mm.
+
+-   `r colnames(penguins)[5]` is an integer denoting the flipper length of penguin in millimeters, with a range from `r min(penguins$flipper_length_mm, na.rm = TRUE)` mm to `r max(penguins$flipper_length_mm, na.rm = TRUE)` mm.
+
+-   `r colnames(penguins)[6]` is an integer denoting the body mass of penguin in grams, with a range from `r min(penguins$body_mass_g, na.rm = TRUE)` g to `r max(penguins$body_mass_g, na.rm = TRUE)` g.
+
+-   `r colnames(penguins)[7]` is a factor denoting the penguins sex: `r paste(unique(penguins$sex), collapse = ", ")`.
+
+-   `r colnames(penguins)[8]` is an integer denoting the study year: `r paste(unique(penguins$year), collapse = ", ")`.
+
+The mean flipper length is `r mean(penguins$flipper_length_mm, na.rm = TRUE)` mm.
+
+```{r 1.3 scatter plot, warning=FALSE, message=FALSE}
+#Suppressed warning and message outputs related to missing values and image saving (by changing options of code chunk)
+#create a scatter plot with bill_length_mm on the x-axis and flipper_length_mm on the y-axis, color points based on species
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+#add points to plot
+  geom_point() + 
+#add labels and title and legend to the plot
+  labs(
+    title = "Scatterplot of Flipper Length vs Bill Length",
+    x = "Bill Length (mm)",
+    y = "Flipper Length (mm)",
+    color = "Penguin Species"
+  )
+
+#save the scatterplot as a png file to the project directory
+ggsave("penguin_scatterplot.png") 
+```
